@@ -4,36 +4,44 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #030014;
+    --color-primary: #F6F6F6;
 
-    --color-light-100: #cecefb;
-    --color-light-200: #a8b5db;
+    --accent-mint: #8EE3A2;
+    --accent-coral: #FF8C8C;
+    --accent-lavender: #C7B9FF;
 
-    --color-gray-100: #9ca4ab;
 
-    --color-dark-100: #0f0d23;
+    --color-light-100: #ffffff;
+    --color-light-200: #f1f5f9;
+
+    --color-gray-100: #94a3b8;
+    --color-dark-100: #ffffff;
 
     --font-dm-sans: DM Sans, sans-serif;
 
     --breakpoint-xs: 480px;
 
-    --background-image-hero-pattern: url("/hero-bg.png");
+    /* Serve from public root (Vite): use absolute path without /public */
+    --background-image-hero-pattern: url("/preview-bg.jpg");
 
 }
+
+
 
 @layer base {
     body {
         font-family: "DM Sans", serif;
         font-optical-sizing: auto;
-        background: #030014;
+        background: var(--color-primary);
+        color: #0f172a;
     }
 
     h1 {
-        @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-white sm:text-[64px] sm:leading-[76px];
+        @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-slate-900 sm:text-[64px] sm:leading-[76px];
     }
 
     h2 {
-        @apply text-2xl font-bold text-white sm:text-3xl;
+        @apply text-2xl font-bold text-slate-900 sm:text-3xl;
     }
 
     main {
@@ -51,7 +59,14 @@
 
 @layer components {
     .pattern {
-        @apply bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0;
+        @apply w-full h-screen absolute z-0;
+        /* Layer: soft white wash over the chosen image */
+        background-image:
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)),
+            var(--background-image-hero-pattern);
+        background-size: cover, cover;
+        background-position: center, center;
+        background-repeat: no-repeat, no-repeat;
     }
 
     .wrapper {
@@ -79,18 +94,18 @@
     }
 
     .search {
-        @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
+        @apply w-full bg-white px-4 py-3 rounded-xl mt-10 max-w-3xl mx-auto ring-1 ring-slate-200 shadow-sm;
 
         & div {
             @apply relative flex items-center;
         }
 
         & img {
-            @apply absolute left-2 h-5 w-5;
+            @apply absolute left-2 h-5 w-5 opacity-60;
         }
 
         & input {
-            @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-gray-200 placeholder-light-200 outline-hidden;
+            @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-slate-700 placeholder-slate-400 outline-hidden rounded-lg;
         }
     }
 
@@ -103,14 +118,14 @@
     }
 
     .movie-card {
-        @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+        @apply bg-white p-5 rounded-2xl ring-1 ring-slate-200 shadow-md transition-shadow hover:shadow-lg;
 
         & img {
             @apply rounded-lg h-auto w-full;
         }
 
         & h3 {
-            @apply text-white font-bold text-base line-clamp-1;
+            @apply text-slate-900 font-bold text-base line-clamp-1;
         }
 
         & .content {
@@ -126,30 +141,31 @@
         }
 
         & .rating p {
-            @apply font-bold text-base text-white;
+            @apply font-bold text-base text-slate-900;
         }
 
         & .content span {
-            @apply text-sm text-gray-100;
+            @apply text-sm text-slate-400;
         }
 
         & .content .lang {
-            @apply capitalize text-gray-100 font-medium text-base;
+            @apply capitalize text-slate-500 font-medium text-base;
         }
 
         & .content .year {
-            @apply text-gray-100 font-medium text-base;
+            @apply text-slate-500 font-medium text-base;
         }
     }
 }
 
 @utility text-gradient {
-    @apply bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF] bg-clip-text text-transparent;
+    /* gentle pastel gradient for highlighted words */
+        @apply bg-linear-to-r from-[var(--accent-lavender)] to-[var(--accent-mint)] bg-clip-text text-transparent;
 }
 
 @utility fancy-text {
-    -webkit-text-stroke: 5px rgba(206, 206, 251, 0.5);
-    font-size: 190px;
+    -webkit-text-stroke: 5px rgba(30, 41, 59, 0.08);
+    font-size: 170px;
     font-family: "Bebas Neue", sans-serif;
 }
 

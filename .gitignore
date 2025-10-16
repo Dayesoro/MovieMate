@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?.
 .env.local
+
+# Project docs not to be tracked
+changes.md
+light.plan.md
+pr.md

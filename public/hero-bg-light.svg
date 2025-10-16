@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <!-- Soft light radial gradient background -->
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="0%" r="100%">
+      <stop offset="0%" stop-color="#EAF0FF"/>
+      <stop offset="60%" stop-color="#F6F8FB"/>
+      <stop offset="100%" stop-color="#F8FAFC"/>
+    </radialGradient>
+
+    <!-- Subtle noise filter -->
+    <filter id="noise" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0 0 0.04"/>
+      </feComponentTransfer>
+    </filter>
+
+    <!-- Large soft highlight blobs -->
+    <radialGradient id="blob" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1440" height="900" fill="url(#bg)"/>
+
+  <!-- Highlight blobs (very low opacity for a modern airy feel) -->
+  <g opacity="0.35">
+    <circle cx="280" cy="140" r="260" fill="url(#blob)"/>
+    <circle cx="1160" cy="120" r="220" fill="url(#blob)"/>
+    <circle cx="840" cy="320" r="260" fill="url(#blob)"/>
+  </g>
+
+  <!-- Very subtle noise texture on top -->
+  <rect width="1440" height="900" filter="url(#noise)"/>
+</svg>
+
+
