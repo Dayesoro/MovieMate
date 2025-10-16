@@ -1,63 +1,104 @@
+/* Web font imports: update families/weights here if the typography changes */
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
+/* Tailwind CSS base + utilities (Tailwind v4 style) */
 @import "tailwindcss";
 
+/*
+  Design tokens (CSS custom properties)
+  - Tweak these values to quickly update the look & feel across the app.
+*/
 @theme {
-    --color-primary: #030014;
+    /* App background color (page surface) */
+    --color-primary: #F6F6F6;
 
-    --color-light-100: #cecefb;
-    --color-light-200: #a8b5db;
+    /* Accent palette for gradients/highlights */
+    --accent-mint: #8EE3A2;
+    --accent-coral: #FF8C8C;
+    --accent-lavender: #C7B9FF;
 
-    --color-gray-100: #9ca4ab;
+    /* Neutral light surfaces */
+    --color-light-100: #ffffff;
+    --color-light-200: #f1f5f9;
 
-    --color-dark-100: #0f0d23;
+    /* Neutral grays/darks used for text/UI accents */
+    --color-gray-100: #94a3b8;
+    --color-dark-100: #ffffff; /* note: currently same as white; adjust if needed */
 
+    /* Font stacks */
     --font-dm-sans: DM Sans, sans-serif;
 
+    /* Custom breakpoint (in addition to Tailwind defaults) */
     --breakpoint-xs: 480px;
 
-    --background-image-hero-pattern: url("/hero-bg.png");
+    /*
+      Hero background image
+      - Vite serves from /public at the root URL
+      - Replace the filename to change the hero pattern site-wide
+    */
+    --background-image-hero-pattern: url("/preview-bg.jpg");
 
 }
 
+
+
+/* Base element styles: global typography, layout primitives */
 @layer base {
+    /* Page defaults: font, background, base text color */
     body {
         font-family: "DM Sans", serif;
         font-optical-sizing: auto;
-        background: #030014;
+        background: var(--color-primary);
+        color: #0f172a;
     }
 
+    /* Main page heading style */
     h1 {
-        @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-white sm:text-[64px] sm:leading-[76px];
+        @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-slate-900 sm:text-[64px] sm:leading-[76px];
     }
 
+    /* Section heading style */
     h2 {
-        @apply text-2xl font-bold text-white sm:text-3xl;
+        @apply text-2xl font-bold text-slate-900 sm:text-3xl;
     }
 
+    /* Main content container */
     main {
         @apply min-h-screen relative bg-primary;
     }
 
+    /* Top spacing for header area */
     header {
         @apply sm:mt-10 mt-5;
     }
 
+    /* Branding/hero image sizing */
     header img {
         @apply w-full max-w-lg h-auto object-contain mx-auto drop-shadow-md;
     }
 }
 
+/* Component-level styles: reusable UI blocks */
 @layer components {
+    /* Full-bleed hero background overlay with soft white wash */
     .pattern {
-        @apply bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0;
+        @apply w-full h-screen absolute z-0;
+        /* Layer: soft white wash over the chosen image */
+        background-image:
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)),
+            var(--background-image-hero-pattern);
+        background-size: cover, cover;
+        background-position: center, center;
+        background-repeat: no-repeat, no-repeat;
     }
 
+    /* Generic content wrapper for horizontal/vertical spacing */
     .wrapper {
         @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
     }
 
+    /* Trending strip: horizontal scroll of poster + label */
     .trending {
         @apply mt-20;
 
@@ -78,22 +119,24 @@
         }
     }
 
+    /* Search bar container + input */
     .search {
-        @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
+        @apply w-full bg-white px-4 py-3 rounded-xl mt-10 max-w-3xl mx-auto ring-1 ring-slate-200 shadow-sm;
 
         & div {
             @apply relative flex items-center;
         }
 
         & img {
-            @apply absolute left-2 h-5 w-5;
+            @apply absolute left-2 h-5 w-5 opacity-60;
         }
 
         & input {
-            @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-gray-200 placeholder-light-200 outline-hidden;
+            @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-slate-700 placeholder-slate-400 outline-hidden rounded-lg;
         }
     }
 
+    /* Grid layout for the movie listing */
     .all-movies {
         @apply space-y-9;
 
@@ -102,15 +145,16 @@
         }
     }
 
+    /* Individual movie card styling */
     .movie-card {
-        @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+        @apply bg-white p-5 rounded-2xl ring-1 ring-slate-200 shadow-md transition-shadow hover:shadow-lg;
 
         & img {
             @apply rounded-lg h-auto w-full;
         }
 
         & h3 {
-            @apply text-white font-bold text-base line-clamp-1;
+            @apply text-slate-900 font-bold text-base line-clamp-1;
         }
 
         & .content {
@@ -126,33 +170,104 @@
         }
 
         & .rating p {
-            @apply font-bold text-base text-white;
+            @apply font-bold text-base text-slate-900;
         }
 
         & .content span {
-            @apply text-sm text-gray-100;
+            @apply text-sm text-slate-400;
         }
 
         & .content .lang {
-            @apply capitalize text-gray-100 font-medium text-base;
+            @apply capitalize text-slate-500 font-medium text-base;
         }
 
         & .content .year {
-            @apply text-gray-100 font-medium text-base;
+            @apply text-slate-500 font-medium text-base;
         }
     }
 }
 
+/* Utility: apply a brand gradient to text */
 @utility text-gradient {
-    @apply bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF] bg-clip-text text-transparent;
+    /* gentle pastel gradient for highlighted words */
+        @apply bg-linear-to-r from-[var(--accent-lavender)] to-[var(--accent-mint)] bg-clip-text text-transparent;
 }
 
+/* Utility: oversized outlined display text for decorative labels */
 @utility fancy-text {
-    -webkit-text-stroke: 5px rgba(206, 206, 251, 0.5);
-    font-size: 190px;
+    -webkit-text-stroke: 5px rgba(30, 41, 59, 0.08);
+    font-size: 170px;
     font-family: "Bebas Neue", sans-serif;
 }
 
+/* ------------------------------
+   Dark theme overrides
+   Apply previous dark look when [data-theme="dark"] is set on <html>
+-------------------------------- */
+[data-theme="dark"] {
+    /* tokens */
+    --color-primary: #030014;
+    --color-light-100: #cecefb; /* reused for subtle tints */
+    --color-light-200: #a8b5db;
+    --color-gray-100: #9ca4ab;
+    --color-dark-100: #0f0d23;
+
+    /* gradient accents (old purple) */
+    --accent-lavender: #D6C7FF;
+    --accent-mint: #AB8BFF; /* overloaded to second stop for dark */
+}
+
+[data-theme="dark"] body {
+    background: var(--color-primary);
+    color: #ffffff;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2 {
+    @apply text-white;
+}
+
+[data-theme="dark"] .pattern {
+    /* fall back to photo with a darker wash */
+    background-image:
+        linear-gradient(to bottom, rgba(3,0,20,0.7), rgba(3,0,20,0.7)),
+        var(--background-image-hero-pattern);
+}
+
+/* Ensure the theme toggle label text remains visible on dark backgrounds */
+[data-theme="dark"] label span {
+    @apply text-white;
+}
+
+[data-theme="dark"] .search {
+    @apply bg-light-100/5 ring-0 shadow-inner;
+}
+
+[data-theme="dark"] .search input {
+    @apply text-gray-200 placeholder-light-200;
+}
+
+[data-theme="dark"] .movie-card {
+    @apply bg-dark-100 shadow-inner shadow-light-100/10 ring-0;
+}
+
+[data-theme="dark"] .movie-card h3,
+[data-theme="dark"] .movie-card .rating p {
+    @apply text-white;
+}
+
+[data-theme="dark"] .movie-card .content span,
+[data-theme="dark"] .movie-card .content .lang,
+[data-theme="dark"] .movie-card .content .year {
+    @apply text-gray-100;
+}
+
+[data-theme="dark"] text-gradient,
+[data-theme="dark"] .text-gradient {
+    @apply bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF] bg-clip-text text-transparent;
+}
+
+/* Utility: hide scrollbars while preserving scroll behavior */
 @utility hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
