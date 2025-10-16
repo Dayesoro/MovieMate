@@ -38,6 +38,7 @@
 - 🔍 **Smart Search**: Real-time movie search with debounced input to optimize API calls
 - 📈 **Trending Movies**: Discover the most searched movies based on user activity
 - 🎨 **Modern UI**: Beautiful, responsive design built with Tailwind CSS
+- 🌗 **Theme Toggle**: Switch between Light and Dark themes
 - ⚡ **Fast Performance**: Built with Vite for lightning-fast development and builds
 - 📱 **Mobile-First**: Fully responsive design that works on all devices
 - 🗄️ **Data Persistence**: Search analytics stored using Appwrite backend

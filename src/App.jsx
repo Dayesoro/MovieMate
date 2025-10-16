@@ -1,9 +1,11 @@
 import { useEffect, useState} from 'react'
 import Search from "./components/Search.jsx";
 import Spinner from "./components/Spinner.jsx";
+import ThemeToggle from "./components/ThemeToggle.jsx";
 import MovieCard from "./components/MovieCard.jsx";
 import {useDebounce} from 'react-use'
 import {getTrendingMovies, updateSearchCount} from "./appwrite.js";
+
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
@@ -26,6 +28,7 @@ const App = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [trendingMovies, setTrendingMovies] = useState([]);
+    const [theme, setTheme] = useState('light');
 
     // Debounce the search term to prevent making too many API requests
     // by waiting for the user to stop typing for 500ms
@@ -88,11 +91,23 @@ const App = () => {
         loadTrendingMovies();
     },[]);
 
+    // Default to light theme. Toggle simply flips and updates attribute.
+    const toggleTheme = () => {
+        const next = theme === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+        if (next === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+    }
+
     return (
         <main>
             <div className="pattern"/>
 
             <div className="wrapper">
+                    <ThemeToggle theme={theme} onToggle={toggleTheme} />
                     <header>
                         <img src="./hero.png" alt="Hero Banner" />
                         <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy
